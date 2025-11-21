@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Last War Survival Game</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="page-shell">
+    <header class="page-hero">
+      <p class="eyebrow">Panel táctico</p>
+  <h1>Last War Survival Game</h1>
+      <p class="lede">Visualiza los bloques de 4 horas, el mejor duelo disponible y destaca el rango activo para maximizar el puntaje diario.</p>
+    </header>
+
+    <section class="context-grid" aria-label="Resumen diario">
+      <article class="context-card" id="today-card">
+        <h2>Hoy</h2>
+        <p class="context-label">Estado actual</p>
+        <div class="context-values">
+          <p class="context-value" data-today-event></p>
+          <p class="context-value" data-today-vs></p>
+        </div>
+        <p class="timestamp">Actualizado a las <span data-clock></span></p>
+      </article>
+
+      <article class="context-card" id="tomorrow-card">
+        <h2>Mañana</h2>
+        <p class="context-label">Proyección</p>
+        <div class="context-values">
+          <p class="context-value" data-tomorrow-event></p>
+          <p class="context-value" data-tomorrow-vs></p>
+        </div>
+        <p class="timestamp subtle">Prepárate para el siguiente emparejamiento.</p>
+      </article>
+
+      <article class="context-card legend-card">
+        <h2>Guía rápida</h2>
+        <ul>
+          <li><span class="swatch highlight"></span>Rango horario activo (se actualiza cada minuto).</li>
+          <li><span class="swatch today"></span>Etiqueta para el día actual.</li>
+          <li><span class="swatch tomorrow"></span>Etiqueta para el día siguiente.</li>
+        </ul>
+      </article>
+    </section>
+
+    <section aria-labelledby="tabla-title" class="table-section">
+      <div class="section-heading">
+        <h2 id="tabla-title">Calendario sincronizado</h2>
+        <p>Incluye los siete días del Evento y los seis días del VS. Los duelos destacados muestran el objetivo con mayor puntaje por día.</p>
+      </div>
+      <div class="table-scroll">
+        <table id="sync-table" class="soft-table">
+          <thead>
+            <tr>
+              <th>Día del Evento</th>
+              <th>Día del VS</th>
+              <th>Rango horario (4 h)</th>
+              <th>Tema del Evento</th>
+              <th>Resumen</th>
+              <th>Duelo de mayor valor</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section aria-labelledby="plan-title" class="table-section plan-section">
+      <div class="section-heading">
+        <h2 id="plan-title">Plan táctico para las tareas de hoy</h2>
+        <p>Evalúa si conviene ejecutar cada bloque del Evento Día 4 inmediatamente o reservarlo para otra franja/VS donde el duelo de mayor valor aporta más puntos.</p>
+      </div>
+      <div class="table-scroll">
+  <table id="recommendations-table" class="soft-table planning-table">
+          <thead>
+            <tr>
+              <th>Tarea del Evento</th>
+              <th>Horario del Evento</th>
+              <th>Recomendación</th>
+              <th>Sincronía VS</th>
+              <th>Motivo</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <p class="plan-note">Las recomendaciones priorizan coincidir con el duelo de mayor valor del VS y evitan gastar tareas rentables en el momento equivocado (ej. las recompensas de radar se guardan para el día siguiente con mayor multiplicador, como se hace el lunes tras acumular cofres del domingo).</p>
+    </section>
+  </main>
+
+  <script defer src="app.js"></script>
+  <noscript>
+    <p class="noscript">Activa JavaScript para visualizar la tabla dinámica de coincidencias.</p>
+  </noscript>
+</body>
+</html>
