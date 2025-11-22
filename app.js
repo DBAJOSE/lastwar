@@ -8,12 +8,12 @@ let timelineContext = {
 };
 
 const themeDetails = {
-  "Avance de Héroe": "Usa EXP, fragmentos y medallas para subir de nivel/raridad a tus héroes y desbloquear habilidades de combate.",
-  "Construcción de Ciudad": "Amplía o mejora edificios clave (Cuarteles, Centro de mando, talleres) para aumentar el poder total de la base.",
-  "Progresión de Unidad": "Entrena y promueve tropas; combina aceleradores y recursos para llevarlas al siguiente nivel.",
-  "Investigación Tecnológica": "Acelera proyectos en el laboratorio para desbloquear buffs permanentes de economía, combate y apoyo.",
-  "Mejora de Dron": "Optimiza tu dron: sube nivel, instala placas y aumenta módulos para impulsar recolección y combate.",
-  "Construcción de Ciudad (final)": "Completa pendientes de infraestructura al cierre del evento para amarrar el puntaje restante."
+  "Avance de Héroe": "Usa EXP, fragmentos y medallas. Tip S1: Prioriza subir a Mason a UR (5 estrellas) y guarda fragmentos para el día del duelo.",
+  "Construcción de Ciudad": "Mejora Cuarteles y Centro de Mando. Tip S1: Prioriza las Granjas de Proteínas (sube a Nvl 10+ para optimizar costes).",
+  "Progresión de Unidad": "Entrena tropas de alto nivel. Tip S1: Usa la profesión 'Ingeniero' para reducir costes de entrenamiento si es posible.",
+  "Investigación Tecnológica": "Acelera el laboratorio. Tip S1: La 'Inmunidad al Virus' es crítica; sin ella no podrás atacar zombis de nivel alto.",
+  "Mejora de Dron": "Consume componentes y placas. Tip: Acumula cofres toda la semana y ábrelos solo el día del duelo (Miércoles/Sábado).",
+  "Construcción de Ciudad (final)": "Cierra la semana asegurando puntos. Tip S1: Usa los aceleradores de construcción sobrantes en el Instituto de Virus."
 };
 
 const themeBestVsDays = {

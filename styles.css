@@ -432,6 +432,30 @@ body {
   line-height: 1.4;
 }
 
+.guides-actions {
+  margin-top: 1.5rem;
+}
+
+/* External Resources Section */
+.external-resources {
+  margin-top: 2rem;
+  padding: 2rem;
+  background-color: var(--card-bg);
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.external-resources h2 {
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+}
+
+.external-resources p {
+  margin-bottom: 1.5rem;
+  color: var(--text-secondary);
+}
+
 @media (max-width: 720px) {
   .soft-table th,
   .soft-table td {

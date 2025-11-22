@@ -53,3 +53,13 @@ Panel estático en HTML, CSS y JavaScript que alinea los siete días del Evento 
 - Navegador moderno capaz de ejecutar ES6 (Chrome, Edge Chromium, Firefox, Safari recientes).
 - JavaScript habilitado (se muestra un mensaje si está desactivado).
 - No se necesita compilación ni dependencias externas; basta con abrir el archivo HTML directamente.
+
+## Créditos y Recursos
+
+- **Imágenes y Guías Visuales**: [Oopsie Daisy en Ko-fi](https://ko-fi.com/oopsie_daisy)
+- **Tutoriales y Estrategias**: [Last War Tutorial](https://lastwar-tutorial.com/es/)
+- **Desarrollo**: Generado con asistencia de IA.
+
+## Licencia
+
+Este proyecto es de código abierto y se puede modificar y distribuir libremente, pero se agradece la atribución correspondiente.
