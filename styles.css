@@ -325,6 +325,47 @@ body {
   border-radius: 14px;
 }
 
+.guides-section {
+  margin-top: 2rem;
+}
+
+.guides-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.guide-card {
+  background: var(--bg);
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.guide-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(15, 27, 68, 0.08);
+}
+
+.guide-card img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+.guide-caption {
+  margin: 0;
+  padding: 0.75rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text);
+  border-top: 1px solid var(--border);
+  background: var(--card-bg);
+}
+
 .verdict-chip {
   display: inline-flex;
   align-items: center;

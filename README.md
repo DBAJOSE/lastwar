@@ -13,6 +13,7 @@ Panel estático en HTML, CSS y JavaScript que alinea los siete días del Evento 
 - **Coincidencias por día**: Cada día del Evento agrupa todas sus franjas de 4 horas junto con el día del VS que le genera más sinergia.
 - **Columna de duelos premium**: La última columna resume el objetivo con mayor puntaje disponible para ese día del VS.
 - **Resumen de temas**: Cada tema del Evento muestra una descripción corta basada en guías comunitarias de *Last War Survival* para que sepas qué acciones ejecutar.
+- **Guías visuales**: Sección dedicada con infografías de referencia (prioridad de saqueo, roles, etc.) cortesía de *Oopsie Daisy*.
 - **Resaltado dinámico**: Cada minuto se recalcula el bloque activo. Ejemplo: a las 11:00 se ilumina la franja 09:00–13:00.
 - **Etiquetas contextuales**: "Hoy" y "Mañana" se aplican tanto al Evento como al VS siguiendo la descripción proporcionada (día 4 / día 5 hoy, día 5 / día 6 mañana).
 - **Vista previa del siguiente VS**: El día 7 del Evento muestra el mejor duelo del próximo Día 1 del VS para preparar recursos con antelación.
