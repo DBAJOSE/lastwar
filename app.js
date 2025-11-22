@@ -1,10 +1,10 @@
 const SLOT_DURATION_HOURS = 4;
 
-const timelineContext = {
-  todayEventDay: 4,
-  todayVsDay: 5,
-  tomorrowEventDay: 5,
-  tomorrowVsDay: 6
+let timelineContext = {
+  todayEventDay: 1,
+  todayVsDay: 2,
+  tomorrowEventDay: 2,
+  tomorrowVsDay: 3
 };
 
 const themeDetails = {
@@ -16,68 +16,15 @@ const themeDetails = {
   "Construcción de Ciudad (final)": "Completa pendientes de infraestructura al cierre del evento para amarrar el puntaje restante."
 };
 
-const recommendationPlan = [
-  {
-    theme: "Investigación Tecnológica",
-    eventRange: "21:00 – 01:00",
-    verdict: "Hacer hoy",
-    verdictType: "now",
-    recommendedWindow: "Hoy · 21:00 – 01:00",
-    vsSyncTitle: "VS Día 5 · Radar prioritario",
-    vsSyncDetail: "Aceleradores de investigación + radar (25 000 pts)",
-    reason: "Cerrar la noche con investigación permite gastar aceleradores justo cuando el duelo de radar otorga el mayor puntaje del VS actual."
-  },
-  {
-    theme: "Mejora de Dron",
-    eventRange: "01:00 – 05:00",
-    verdict: "Esperar",
-    verdictType: "wait",
-    recommendedWindow: "VS Día 3 (Miércoles) · 09:00 – 13:00",
-    vsSyncTitle: "VS Día 3 · Cofre componentes Nvl. 7",
-    vsSyncDetail: "1 620 000 pts por apertura",
-    reason: "Guardar las mejoras de dron para el miércoles replica la estrategia de acumular cofres de radar del domingo: al liberarlos cuando el duelo de componentes está activo, el multiplicador es enorme."
-  },
-  {
-    theme: "Avance de Héroe",
-    eventRange: "05:00 – 09:00",
-    verdict: "Esperar",
-    verdictType: "wait",
-    recommendedWindow: "VS Día 4 (Jueves) · 05:00 – 09:00",
-    vsSyncTitle: "VS Día 4 · Fragmentos UR/SSR",
-    vsSyncDetail: "Hasta 20 000 pts por fragmento",
-    reason: "Invertir EXP y fragmentos fuera del jueves desperdicia la bonificación del VS. Mantenlos guardados hasta el duelo de fragmentos para duplicar el valor de cada mejora de héroe."
-  },
-  {
-    theme: "Construcción de Ciudad",
-    eventRange: "09:00 – 13:00",
-    verdict: "Hacer hoy",
-    verdictType: "now",
-    recommendedWindow: "Hoy · 09:00 – 13:00",
-    vsSyncTitle: "VS Día 5 · Construcción + Radar",
-    vsSyncDetail: "Aumenta poder + usa aceleradores",
-    reason: "El VS actual premia subir poder de edificio y gastar aceleradores; ejecutar la construcción en la mañana te deja reagrupar recursos antes del bloque de investigación vespertino."
-  },
-  {
-    theme: "Progresión de Unidad",
-    eventRange: "13:00 – 17:00",
-    verdict: "Hacer hoy",
-    verdictType: "now",
-    recommendedWindow: "Hoy · 13:00 – 17:00",
-    vsSyncTitle: "VS Día 5 · Entrenamiento",
-    vsSyncDetail: "Entrena Nvl. 7 + aceleradores (125 pts)",
-    reason: "El duelo secundario del VS recompensa entrenar y usar aceleradores de entrenamiento; completar el bloque justo después de construir mantiene la cola de cuarteles ocupada sin solaparse."
-  },
-  {
-    theme: "Investigación Tecnológica",
-    eventRange: "17:00 – 21:00",
-    verdict: "Hacer hoy",
-    verdictType: "now",
-    recommendedWindow: "Hoy · 17:00 – 21:00",
-    vsSyncTitle: "VS Día 5 · Radar prioritario",
-    vsSyncDetail: "Configura otra ronda de investigación",
-    reason: "Un segundo bloque vespertino permite preparar investigaciones largas antes de la noche. Así combinas dos tandas del duelo con el mismo set de potenciadores."
-  }
-];
+const themeBestVsDays = {
+  "Avance de Héroe": [4],
+  "Construcción de Ciudad": [2, 5, 6],
+  "Progresión de Unidad": [5, 6],
+  "Investigación Tecnológica": [5, 6],
+  "Mejora de Dron": [3],
+  "Construcción de Ciudad (final)": [2, 5, 6]
+};
+
 
 const eventDays = [
   {
@@ -281,6 +228,75 @@ const timeFormatter = new Intl.DateTimeFormat("es-ES", {
   minute: "2-digit"
 });
 
+function updateTimelineContext() {
+  const now = new Date();
+  const dayOfWeek = now.getDay(); // 0=Sun, 1=Mon, ..., 6=Sat
+
+  // Map dayOfWeek to EventDay
+  // Tue(2) -> 1, Wed(3) -> 2, Thu(4) -> 3, Fri(5) -> 4, Sat(6) -> 5, Sun(0) -> 6, Mon(1) -> 7
+  const dayToEventDay = { 2: 1, 3: 2, 4: 3, 5: 4, 6: 5, 0: 6, 1: 7 };
+  const todayEventDay = dayToEventDay[dayOfWeek];
+  
+  // Calculate tomorrow
+  const tomorrowDate = new Date(now);
+  tomorrowDate.setDate(now.getDate() + 1);
+  const tomorrowDayOfWeek = tomorrowDate.getDay();
+  const tomorrowEventDay = dayToEventDay[tomorrowDayOfWeek];
+
+  // Map to VS Day
+  const todayVsDay = eventVsMapping.get(todayEventDay);
+  const tomorrowVsDay = eventVsMapping.get(tomorrowEventDay);
+
+  timelineContext = {
+    todayEventDay,
+    todayVsDay,
+    tomorrowEventDay,
+    tomorrowVsDay
+  };
+}
+
+function generateRecommendations() {
+  const todayEvent = eventDays.find(d => d.day === timelineContext.todayEventDay);
+  if (!todayEvent) return [];
+
+  return todayEvent.slots.map(slot => {
+    const theme = slot.theme;
+    const bestDays = themeBestVsDays[theme] || [];
+    const isGoodDay = bestDays.includes(timelineContext.todayVsDay);
+    
+    let verdict, verdictType, recommendedWindow, vsSyncTitle, vsSyncDetail, reason;
+
+    if (isGoodDay) {
+      verdict = "Hacer hoy";
+      verdictType = "now";
+      recommendedWindow = `Hoy · ${formatRangeLabel(slot.startHour)}`;
+      vsSyncTitle = `VS Día ${timelineContext.todayVsDay}`;
+      vsSyncDetail = "Coincide con tareas clave";
+      reason = "Aprovecha el solapamiento para puntuar doble en el evento y el VS.";
+    } else {
+      verdict = "Esperar";
+      verdictType = "wait";
+      const nextBestVsDayNum = bestDays[0];
+      const nextBestVsDay = vsDays.find(d => d.day === nextBestVsDayNum);
+      recommendedWindow = nextBestVsDay ? `${nextBestVsDay.weekday}` : "Próximamente";
+      vsSyncTitle = nextBestVsDay ? `VS Día ${nextBestVsDay.day}` : "";
+      vsSyncDetail = "Mejor multiplicador";
+      reason = "Espera al día correcto para maximizar puntos y recompensas.";
+    }
+
+    return {
+      theme,
+      eventRange: formatRangeLabel(slot.startHour),
+      verdict,
+      verdictType,
+      recommendedWindow,
+      vsSyncTitle,
+      vsSyncDetail,
+      reason
+    };
+  });
+}
+
 function formatHour(hour) {
   return `${hour.toString().padStart(2, "0")}:00`;
 }
@@ -412,7 +428,9 @@ function renderRecommendationTable() {
   }
   tbody.innerHTML = "";
 
-  recommendationPlan.forEach((item) => {
+  const recommendations = generateRecommendations();
+
+  recommendations.forEach((item) => {
     const tr = document.createElement("tr");
 
     const taskTd = document.createElement("td");
@@ -514,6 +532,7 @@ function tick() {
 }
 
 function init() {
+  updateTimelineContext();
   renderTable();
   renderRecommendationTable();
   tick();
