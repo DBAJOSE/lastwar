@@ -474,9 +474,12 @@ function highlightActiveSlot() {
   const now = new Date();
   const currentMinutes = now.getHours() * 60 + now.getMinutes();
   const cells = document.querySelectorAll(".range-cell");
+  const rows = document.querySelectorAll("#sync-table tbody tr");
+
+  // Limpiar estado anterior
+  rows.forEach(row => row.classList.remove("active-row"));
 
   cells.forEach((cell) => {
-    cell.classList.remove("active-slot");
     const eventDay = Number(cell.dataset.eventDay);
     if (eventDay !== timelineContext.todayEventDay) {
       return;
@@ -488,7 +491,10 @@ function highlightActiveSlot() {
       ? currentMinutes >= start && currentMinutes < end
       : currentMinutes >= start || currentMinutes < end;
     if (inRange) {
-      cell.classList.add("active-slot");
+      const row = cell.closest("tr");
+      if (row) {
+        row.classList.add("active-row");
+      }
     }
   });
 }

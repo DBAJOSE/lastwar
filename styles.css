@@ -11,6 +11,8 @@
   --accent-soft: rgba(108, 107, 255, 0.12);
   --danger: #ff6b6b;
   --success: #2bb673;
+  --ur-gold: #ffc107; /* Dorado UR */
+  --ur-gold-bg: rgba(255, 193, 7, 0.15);
   font-family: "Segoe UI", "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
 }
 
@@ -295,21 +297,35 @@ body {
   font-style: italic;
 }
 
-.range-cell.active-slot {
-  background: rgba(108, 107, 255, 0.12);
-  box-shadow: 0 0 0 3px rgba(108, 107, 255, 0.28);
+/* Estilos para la fila activa (Dorado UR) */
+tr.active-row {
+  background-color: var(--ur-gold-bg);
+  box-shadow: inset 4px 0 0 var(--ur-gold);
 }
 
-.range-cell.active-slot::after {
-  content: "Ahora";
-  position: absolute;
-  top: 50%;
-  right: 0.75rem;
-  transform: translateY(-50%);
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--accent-strong);
+tr.active-row td {
+  border-top: 1px solid rgba(255, 193, 7, 0.3);
+  border-bottom: 1px solid rgba(255, 193, 7, 0.3);
+}
+
+tr.active-row .range-cell {
+  color: #b38600; /* Texto dorado oscuro para contraste */
+  font-weight: 700;
+}
+
+tr.active-row .range-cell::after {
+  content: "AHORA";
+  display: inline-block;
+  margin-left: 0.5rem;
+  padding: 0.15rem 0.4rem;
+  background: var(--ur-gold);
+  color: #000;
+  border-radius: 4px;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  vertical-align: middle;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .plan-section {
