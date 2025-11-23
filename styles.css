@@ -525,9 +525,58 @@ body {
   border-bottom: none;
 }
 
-.season-pre { border-top: 4px solid #4caf50; } /* Green */
-.season-1 { border-top: 4px solid #f44336; }   /* Red */
-.season-2 { border-top: 4px solid #2196f3; }   /* Blue */
+.server-age-tip {
+  max-width: 600px;
+  margin: 0 auto 2rem;
+  text-align: left;
+}
+
+.server-age-tip details {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.server-age-tip summary {
+  padding: 1rem 1.5rem;
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--accent-strong);
+  list-style: none;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.server-age-tip summary::after {
+  content: "+";
+  font-size: 1.2rem;
+  font-weight: 400;
+}
+
+.server-age-tip details[open] summary::after {
+  content: "-";
+}
+
+.server-age-tip .tip-content {
+  padding: 0 1.5rem 1.5rem;
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  border-top: 1px solid var(--border);
+}
+
+.server-age-tip ol {
+  margin: 0.5rem 0 0;
+  padding-left: 1.2rem;
+}
+
+.server-age-tip li {
+  margin-bottom: 0.5rem;
+}
 
 @media (max-width: 720px) {
   .soft-table th,
