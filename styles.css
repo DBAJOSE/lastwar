@@ -352,6 +352,80 @@ body {
   opacity: 0.9;
 }
 
+/* Tips Section */
+.tips-section {
+  margin-top: 2rem;
+}
+
+.tips-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.tip-card {
+  background: var(--card-bg);
+  border-radius: 16px;
+  padding: 1.5rem;
+  border: 1px solid var(--border);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.tip-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(15, 27, 68, 0.08);
+}
+
+.tip-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+}
+
+.tip-card.accumulation::before { background: var(--ur-gold); }
+.tip-card.combat::before { background: var(--danger); }
+.tip-card.economy::before { background: var(--accent); }
+.tip-card.training::before { background: var(--success); }
+
+.tip-icon {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.tip-card h3 {
+  margin: 0 0 0.75rem;
+  font-size: 1.1rem;
+  color: var(--text);
+}
+
+.tip-card p {
+  margin: 0 0 1rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.tip-card ul {
+  margin: 0;
+  padding-left: 1.2rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.tip-card li {
+  margin-bottom: 0.5rem;
+}
+
+.tip-card li strong {
+  color: var(--text);
+}
+
 @keyframes slideIn {
   from { opacity: 0; transform: translateY(-10px); }
   to { opacity: 1; transform: translateY(0); }
