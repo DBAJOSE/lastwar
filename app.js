@@ -286,6 +286,7 @@ function generateRecommendations() {
 
     return {
       theme,
+      startHour: slot.startHour,
       eventRange: formatRangeLabel(slot.startHour),
       verdict,
       verdictType,
@@ -438,7 +439,11 @@ function renderRecommendationTable() {
     tr.appendChild(taskTd);
 
     const rangeTd = document.createElement("td");
+    rangeTd.className = "range-cell";
     rangeTd.textContent = item.eventRange;
+    rangeTd.dataset.eventDay = String(timelineContext.todayEventDay);
+    rangeTd.dataset.startMinutes = String(item.startHour * 60);
+    rangeTd.dataset.durationMinutes = String(SLOT_DURATION_HOURS * 60);
     tr.appendChild(rangeTd);
 
     const recommendationTd = document.createElement("td");
@@ -474,7 +479,7 @@ function highlightActiveSlot() {
   const now = new Date();
   const currentMinutes = now.getHours() * 60 + now.getMinutes();
   const cells = document.querySelectorAll(".range-cell");
-  const rows = document.querySelectorAll("#sync-table tbody tr");
+  const rows = document.querySelectorAll("#sync-table tbody tr, #recommendations-table tbody tr");
 
   // Limpiar estado anterior
   rows.forEach(row => row.classList.remove("active-row"));
@@ -529,6 +534,11 @@ function renderContextCards() {
   }
   if (clockEl) {
     clockEl.textContent = timeFormatter.format(new Date());
+  }
+
+  const tacticalDescEl = document.getElementById("tactical-plan-desc");
+  if (tacticalDescEl) {
+    tacticalDescEl.textContent = `Evalúa si conviene ejecutar cada bloque del Evento Día ${timelineContext.todayEventDay} inmediatamente o reservarlo para otra franja/VS donde el duelo de mayor valor aporta más puntos.`;
   }
 }
 
