@@ -312,6 +312,51 @@ body {
   color: var(--accent-strong);
 }
 
+/* Shield Alert Styles */
+.shield-alert {
+  padding: 1rem 1.5rem;
+  border-radius: 16px;
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+  animation: slideIn 0.5s ease-out;
+}
+
+.shield-alert.warning {
+  background: #fff8e1;
+  border: 1px solid #ffe082;
+  color: #ff6f00;
+}
+
+.shield-alert.danger {
+  background: #ffebee;
+  border: 1px solid #ef9a9a;
+  color: #c62828;
+}
+
+.shield-icon {
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.shield-content strong {
+  display: block;
+  font-size: 1.1rem;
+  margin-bottom: 0.25rem;
+}
+
+.shield-content p {
+  margin: 0;
+  font-size: 0.95rem;
+  opacity: 0.9;
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 /* Estilos para la fila activa (Dorado UR) */
 tr.active-row {
   background-color: var(--ur-gold-bg);

@@ -371,7 +371,14 @@ function buildBestDuelCell(vsDayNumber, options = {}) {
   const { eventDay } = options;
   if (!vsDayNumber) {
     if (eventDay === 6) { // Domingo
-      return '<span class="vs-advice"><strong>¡Prepárate para el Lunes!</strong><br>• 📡 <strong>Radar:</strong> No las hagas hoy, guárdalas para mañana.<br>• 🔋 <strong>Energía:</strong> Acumula para matar zombis mañana.<br>• 🧪 <strong>EXP:</strong> No subas héroes hoy.</span>';
+      return `<span class="vs-advice">
+        <strong>¡Prepárate para el Lunes!</strong><br>
+        • 📡 <strong>Radar:</strong> ¡NO las hagas! Guárdalas.<br>
+        • 🔋 <strong>Energía:</strong> Acumula 120/120 + ítems.<br>
+        • 🧪 <strong>EXP Héroe:</strong> No gastes, guarda todo.<br>
+        • 💾 <strong>Datos Dron:</strong> Guarda para mañana.<br>
+        • 📦 <strong>Cofres:</strong> Abre solo si dan lo anterior.
+      </span>`;
     }
     return '<span class="vs-off">VS finalizado</span>';
   }
@@ -623,9 +630,52 @@ function renderContextCards() {
   }
 }
 
+function checkShieldAlert() {
+  const alertContainer = document.getElementById("shield-alert-container");
+  if (!alertContainer) return;
+
+  // Limpiar alerta previa
+  alertContainer.innerHTML = "";
+  alertContainer.style.display = "none";
+
+  // Lógica de alerta basada en timelineContext
+  // Viernes (Event Day 4) -> Alerta de preparación
+  // Sábado (Event Day 5) -> Alerta de guerra activa
+  
+  let alertHTML = "";
+  
+  if (timelineContext.todayEventDay === 4) {
+    alertHTML = `
+      <div class="shield-alert warning">
+        <span class="shield-icon">🛡️</span>
+        <div class="shield-content">
+          <strong>¡Alerta de Escudo!</strong>
+          <p>Mañana es Sábado (Día de Muerte). Activa un <strong>escudo de 24 horas</strong> antes del reinicio del servidor o antes de ir a dormir.</p>
+        </div>
+      </div>
+    `;
+  } else if (timelineContext.todayEventDay === 5) {
+    alertHTML = `
+      <div class="shield-alert danger">
+        <span class="shield-icon">⚔️</span>
+        <div class="shield-content">
+          <strong>¡Guerra Activa (KE)!</strong>
+          <p>Estamos en el Día de Muerte. <strong>Mantén tu escudo activo</strong> si no estás atacando. Los recolectores pueden ser atacados.</p>
+        </div>
+      </div>
+    `;
+  }
+
+  if (alertHTML) {
+    alertContainer.innerHTML = alertHTML;
+    alertContainer.style.display = "block";
+  }
+}
+
 function tick() {
   renderContextCards();
   highlightActiveSlot();
+  checkShieldAlert();
 }
 
 function init() {
