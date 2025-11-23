@@ -219,6 +219,14 @@ const bestDuelsByVsDay = new Map(
   })
 );
 
+const hoverTips = {
+  "Mejora de Dron": "<strong>Componentes:</strong> Abre cofres el Miércoles (puntos por abrir).<br><strong>Placas:</strong> Úsalas el Lunes (puntos por gastar).",
+  "Avance de Héroe": "<strong>EXP/Fragmentos:</strong> Úsalos el Jueves o Sábado.<br><strong>Habilidades:</strong> Prioriza medallas en días de VS.",
+  "Construcción de Ciudad": "<strong>Aceleradores:</strong> Úsalos en VS (Martes/Viernes).<br><strong>Poder:</strong> Sube edificios clave.",
+  "Progresión de Unidad": "<strong>Entrenamiento:</strong> Acelera tropas T7+ el Viernes/Sábado.<br><strong>Supervivientes:</strong> Recluta el Martes.",
+  "Investigación Tecnológica": "<strong>Tecnología:</strong> Acelera investigaciones el Miércoles/Viernes.<br><strong>Valor:</strong> Enfócate en ramas de combate."
+};
+
 const numberFormatter = new Intl.NumberFormat("es-ES", {
   maximumFractionDigits: 2
 });
@@ -482,7 +490,17 @@ function highlightActiveSlot() {
   const rows = document.querySelectorAll("#sync-table tbody tr, #recommendations-table tbody tr");
 
   // Limpiar estado anterior
+  document.querySelectorAll(".now-badge").forEach(el => el.remove());
   rows.forEach(row => row.classList.remove("active-row"));
+  
+  // Restaurar cualquier tooltip que se haya quedado pegado
+  document.querySelectorAll(".best-duel.showing-tip").forEach(cell => {
+      if (cell.dataset.originalContent) {
+          cell.innerHTML = cell.dataset.originalContent;
+          delete cell.dataset.originalContent;
+          cell.classList.remove("showing-tip");
+      }
+  });
 
   cells.forEach((cell) => {
     const eventDay = Number(cell.dataset.eventDay);
@@ -499,9 +517,61 @@ function highlightActiveSlot() {
       const row = cell.closest("tr");
       if (row) {
         row.classList.add("active-row");
+        
+        // Solo añadir badge en la tabla principal (sync-table)
+        if (row.closest("#sync-table")) {
+            const badge = document.createElement("span");
+            badge.className = "now-badge";
+            badge.textContent = "AHORA";
+            cell.appendChild(badge);
+            
+            badge.addEventListener("mouseenter", () => showHoverTip(row));
+            badge.addEventListener("mouseleave", () => hideHoverTip(row));
+        }
       }
     }
   });
+}
+
+function showHoverTip(row) {
+    const themeCell = row.querySelector(".theme-cell");
+    if (!themeCell) return;
+    
+    const theme = themeCell.textContent;
+    const tip = hoverTips[theme] || themeDetails[theme];
+    const rangeCell = row.querySelector(".range-cell");
+    const eventDay = rangeCell.dataset.eventDay;
+    
+    // Encontrar la celda best-duel correspondiente (está en la primera fila del grupo del día)
+    // Buscamos la primera celda range-cell con el mismo eventDay
+    const firstRangeCell = document.querySelector(`#sync-table .range-cell[data-event-day="${eventDay}"]`);
+    if (!firstRangeCell) return;
+    
+    const firstRow = firstRangeCell.closest("tr");
+    const bestDuelCell = firstRow.querySelector(".best-duel");
+    
+    if (bestDuelCell && !bestDuelCell.dataset.originalContent) {
+        bestDuelCell.dataset.originalContent = bestDuelCell.innerHTML;
+        bestDuelCell.innerHTML = `<div class="hover-tip-content">${tip}</div>`;
+        bestDuelCell.classList.add("showing-tip");
+    }
+}
+
+function hideHoverTip(row) {
+    const rangeCell = row.querySelector(".range-cell");
+    const eventDay = rangeCell.dataset.eventDay;
+    
+    const firstRangeCell = document.querySelector(`#sync-table .range-cell[data-event-day="${eventDay}"]`);
+    if (!firstRangeCell) return;
+    
+    const firstRow = firstRangeCell.closest("tr");
+    const bestDuelCell = firstRow.querySelector(".best-duel");
+    
+    if (bestDuelCell && bestDuelCell.dataset.originalContent) {
+        bestDuelCell.innerHTML = bestDuelCell.dataset.originalContent;
+        delete bestDuelCell.dataset.originalContent;
+        bestDuelCell.classList.remove("showing-tip");
+    }
 }
 
 function renderContextCards() {

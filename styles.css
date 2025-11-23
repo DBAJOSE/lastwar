@@ -313,8 +313,7 @@ tr.active-row .range-cell {
   font-weight: 700;
 }
 
-tr.active-row .range-cell::after {
-  content: "AHORA";
+.now-badge {
   display: inline-block;
   margin-left: 0.5rem;
   padding: 0.15rem 0.4rem;
@@ -326,6 +325,27 @@ tr.active-row .range-cell::after {
   letter-spacing: 0.05em;
   vertical-align: middle;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  cursor: help;
+  pointer-events: auto;
+  transition: transform 0.1s;
+}
+
+.now-badge:hover {
+  transform: scale(1.1);
+}
+
+.hover-tip-content {
+  font-size: 0.85rem;
+  color: var(--text);
+  background: rgba(255, 193, 7, 0.1);
+  padding: 0.5rem;
+  border-radius: 8px;
+  border: 1px solid var(--ur-gold);
+  line-height: 1.4;
+}
+
+.hover-tip-content strong {
+  color: #b38600;
 }
 
 .plan-section {
