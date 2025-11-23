@@ -297,6 +297,21 @@ body {
   font-style: italic;
 }
 
+.vs-advice {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--text);
+  background: rgba(108, 107, 255, 0.08);
+  padding: 0.5rem;
+  border-radius: 8px;
+  border: 1px solid var(--accent-soft);
+  line-height: 1.4;
+}
+
+.vs-advice strong {
+  color: var(--accent-strong);
+}
+
 /* Estilos para la fila activa (Dorado UR) */
 tr.active-row {
   background-color: var(--ur-gold-bg);

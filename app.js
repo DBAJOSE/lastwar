@@ -238,7 +238,15 @@ const timeFormatter = new Intl.DateTimeFormat("es-ES", {
 
 function updateTimelineContext() {
   const now = new Date();
-  const dayOfWeek = now.getDay(); // 0=Sun, 1=Mon, ..., 6=Sat
+  
+  // Ajuste: El día del juego comienza a las 21:00
+  // Si son las 21:00 o más, calculamos como si fuera el día siguiente
+  const effectiveDate = new Date(now);
+  if (now.getHours() >= 21) {
+    effectiveDate.setDate(now.getDate() + 1);
+  }
+
+  const dayOfWeek = effectiveDate.getDay(); // 0=Sun, 1=Mon, ..., 6=Sat
 
   // Map dayOfWeek to EventDay
   // Tue(2) -> 1, Wed(3) -> 2, Thu(4) -> 3, Fri(5) -> 4, Sat(6) -> 5, Sun(0) -> 6, Mon(1) -> 7
@@ -246,8 +254,8 @@ function updateTimelineContext() {
   const todayEventDay = dayToEventDay[dayOfWeek];
   
   // Calculate tomorrow
-  const tomorrowDate = new Date(now);
-  tomorrowDate.setDate(now.getDate() + 1);
+  const tomorrowDate = new Date(effectiveDate);
+  tomorrowDate.setDate(effectiveDate.getDate() + 1);
   const tomorrowDayOfWeek = tomorrowDate.getDay();
   const tomorrowEventDay = dayToEventDay[tomorrowDayOfWeek];
 
@@ -362,6 +370,9 @@ function buildVsDayCell(vsDayNumber, options = {}) {
 function buildBestDuelCell(vsDayNumber, options = {}) {
   const { eventDay } = options;
   if (!vsDayNumber) {
+    if (eventDay === 6) { // Domingo
+      return '<span class="vs-advice"><strong>¡Prepárate para el Lunes!</strong><br>• 📡 <strong>Radar:</strong> No las hagas hoy, guárdalas para mañana.<br>• 🔋 <strong>Energía:</strong> Acumula para matar zombis mañana.<br>• 🧪 <strong>EXP:</strong> No subas héroes hoy.</span>';
+    }
     return '<span class="vs-off">VS finalizado</span>';
   }
   const duel = bestDuelsByVsDay.get(vsDayNumber);
