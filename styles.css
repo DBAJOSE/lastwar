@@ -456,6 +456,77 @@ body {
   color: var(--text-secondary);
 }
 
+/* Season Identifier Section */
+.season-identifier {
+  margin-top: 2rem;
+}
+
+.season-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.season-card {
+  background-color: var(--card-bg);
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+  border: 1px solid var(--border-color);
+  transition: transform 0.2s;
+}
+
+.season-card:hover {
+  transform: translateY(-5px);
+}
+
+.season-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.season-card h3 {
+  color: var(--primary-color);
+  margin-bottom: 0.5rem;
+}
+
+.season-name {
+  font-weight: bold;
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+}
+
+.season-card ul {
+  list-style: none;
+  padding: 0;
+  text-align: left;
+}
+
+.season-card li {
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  padding-bottom: 0.5rem;
+  color: var(--text-secondary);
+}
+
+.season-card li strong {
+  color: var(--text-primary);
+}
+
+.season-card li:last-child {
+  border-bottom: none;
+}
+
+.season-pre { border-top: 4px solid #4caf50; } /* Green */
+.season-1 { border-top: 4px solid #f44336; }   /* Red */
+.season-2 { border-top: 4px solid #2196f3; }   /* Blue */
+
 @media (max-width: 720px) {
   .soft-table th,
   .soft-table td {
@@ -515,5 +586,27 @@ body {
 
   .plan-note {
     font-size: 0.82rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .season-card {
+    padding: 1.2rem;
+  }
+
+  .season-icon {
+    font-size: 2.5rem;
+  }
+
+  .season-card h3 {
+    font-size: 1.1rem;
+  }
+
+  .season-name {
+    font-size: 0.85rem;
+  }
+
+  .season-card li {
+    font-size: 0.85rem;
   }
 }
